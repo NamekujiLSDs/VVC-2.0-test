@@ -1,0 +1,115 @@
+/* fallback */
+
+@font-face {
+    font-family: 'Material Symbols Outlined';
+    font-style: normal;
+    font-weight: 100 700;
+    src: url(https://fonts.gstatic.com/s/materialsymbolsoutlined/v156/kJEhBvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oFsI.woff2) format('woff2');
+}
+
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -moz-font-feature-settings: 'liga';
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#vvcSetting {
+    background-color: #222;
+    width: 620px;
+    height: 470px;
+    color: white;
+    /* margin-inline: 10px; */
+    padding-top: 0;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    box-shadow: 0 0 5px black;
+}
+
+#settingTitleBar {
+    width: 600px;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    background: gray;
+    height: 25px;
+}
+
+#setBody {
+    overflow-y: scroll;
+    height: 425px;
+    width: 600px;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.catTitle {
+    font-weight: 700;
+    margin-bottom: 10px;
+    width: 200px;
+}
+
+#horizonalSpacer {
+    height: 2px;
+    background-color: #fff2;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px
+}
+
+#setItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 550px;
+    margin-left: 40px;
+    color: #aaa;
+    margin-bottom: 2px;
+}
+
+.closeBtn:hover {
+    background: red;
+}
+
+.closeBtn {
+    width: 40px;
+    text-align: center;
+    margin-right: -10px;
+    cursor: pointer;
+}
+
+.gridBtn {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: white;
+}
+
+:focus {
+    outline: 1px solid cyan
+}
