@@ -1,7 +1,8 @@
-const { ipcRenderer, shell } = require('electron');
+const { ipcRenderer, shell, app, dialog } = require('electron');
 const store = require("electron-store");
 const log = require("electron-log");
 const path = require("path")
+const fs = require('fs');
 
 const config = new store()
 const setting = require("./setting")
@@ -10,7 +11,7 @@ log.info("gametools.js has been loaded.")
 
 exports.clientTools = class {
     generateSettingDom(val) {
-        log.info(val.id, config.get(val.id))
+        // log.info(val.id, config.get(val.id))
         switch (val.type) {
             case "checkbox":
                 return `<input id="settingCheckbox" type="checkbox" onclick="window.tool.setSetting('${val.id}',this.checked)"${config.get(val.id, val.default) ? 'checked' : ''}>`;
@@ -30,13 +31,13 @@ exports.clientTools = class {
                 </div>`;
             case "textarea":
                 return `
-                <textarea id="${val.id}" onchange="window.tool.setSetting('${val.id}',this.value)">${config.get(val.id) != null ? val.id : ""}</textarea>`;
+                <textarea id="${val.id}" onchange="window.tool.setSetting('${val.id}',this.value)">${config.get(val.id) != null ? config.get(val.id) : ""}</textarea>`;
             case "password":
-                return `<input type="password" id="${val.id}" oninput="window.tool.setSetting('${val.id}',this.value))" value="${config.get(val.id) != null ? vai.id : ""}">`;
+                return `<input type="password" id="${val.id}" oninput="window.tool.setSetting('${val.id}',this.value)" value="${config.get(val.id) != null ? config.get(val.id) : ""}">`;
             case "button":
                 return `<input type="button" id="${val.id}" value="${val.buttonVal}" onclick="window.tool.setSetting('${val.id}')">`;
             case "openFile":
-                return `<input title="${config.get(val.id) ? val.id : 'No file selected'}" type="button" id="${val.id}" value="OPEN FILE" onclick="window.tool.openFile('${val.id}')">`;
+                return `<input title="${config.get(val.id) != null ? config.get(val.id) : 'No file selected'}" type="button" id="${val.id}" value="OPEN FILE" onclick="window.tool.openFile('${val.id}')">`;
         }
     };
     setupClientSetting() {
@@ -56,8 +57,7 @@ exports.clientTools = class {
                 dom += `<div id="setItem"><div id="settingName">${val.title}</div>`
                 settingWindowHTML += dom + this.generateSettingDom(val) + "</div>"
             });
-            settingWindowHTML += `<div id=setBox><div class=catTitle>Account manager</div><div id=horizonalSpacer></div><div id=setItem class=gridBtn><input onclick='window.open("https://google.com")'type=button value=Google> <input onclick='window.open("https://www.facebook.com")'type=button value=Facebook> <input onclick='window.open("https://discord.com/channels/@me")'type=button value=Discord> <input onclick='window.location.href="https://voxiom.io/auth/logout"'type=button value=" Logout Voxiom "></div></div><div id=setBox><div class=catTitle>Other setting</div><div id=horizonalSpacer></div><div id=setItem class=gridBtn><input onclick=window.tool.clearCache() type=button value="Cache clear"> <input onclick=window.tool.resetAll() type=button value="Reset all"> <input onclick=window.tool.restart() type=button value="Restart client"> <input onclick=window.tool.help() type=button value=Help></div></div>`
-
+            settingWindowHTML += `<div id=setBox><div class=catTitle>Account manager</div><div id=horizonalSpacer></div><div id=setItem class=gridBtn><input onclick='window.open("https://google.com")' type=button value=Google><input onclick='window.open("https://www.facebook.com")' type=button value=Facebook><input onclick='window.open("https://discord.com/channels/@me")' type=button value=Discord><input onclick='window.tool.help()' type=button value="Open Help"></div></div>`
             return settingWindowHTML ? settingWindowHTML + "</div></div></div>" : ""
         }
         document.body.insertAdjacentHTML("afterbegin", windowInitialize())
@@ -69,15 +69,30 @@ exports.clientTools = class {
     initDoms() {
         let dom1 = `<style id="customBgCss">.bNczYf{background-image:url("${config.get("customBG") == null || config.get("customBG") == "" ? setting.customBackGround.default : config.get("customBG")}")}.hrxbol{content:url("${config.get("customLogo") == "" || config.get("customLogo") == null ? setting.customGameLogo.default : config.get("customLogo")}")}</style>`;
         document.body.insertAdjacentHTML("afterbegin", dom1);
-        let dom2 = `<style> .snowflakes {display: ${config.get("disableSnow") !== true ? "unset" : "none"}}</style>`
+
+        let dom2 = `<style id="snowStyle"> .snowflakes {display: ${config.get("disableSnow") !== true ? "unset" : "none"}}</style>`
         document.body.insertAdjacentHTML("afterbegin", dom2);
+        let dom3 = `<style id="freeGem">.ksWDWD{display:${config.get("disableGemPopup") !== true ? "unset" : "none !important"}}</style>`
+        document.body.insertAdjacentHTML("afterbegin", dom3);
         let crosshair = `<img id="crosshair" style="width:${config.get("crosshairSizeX") != null ? config.get("crosshairSizeX") : setting.crosshairSizeX.default}px;height:${config.get("crosshairSizeY") != null ? config.get("crosshairSizeY") : setting.crosshairSizeY.default}px;" src="${config.get("customCrosshairImage") != null ? config.get("customCrosshairImage") : setting.customCrosshairImage.default}" class="${config.get("customCrosshairCheckbox") ? "" : "hide"}" ></img>`
         document.getElementById("app").insertAdjacentHTML("afterbegin", crosshair);
 
+        if (config.get("cssType") === "none") {
+            console.log("No custom css gen")
+        } else if (config.get("cssType") === "text") {
+            let css = `<style id="customCSS">${config.get("cssTextarea") != null ? config.get("cssTextarea") : ""}</style>`;
+            document.body.insertAdjacentHTML("afterbegin", css)
+        } else if (config.get("cssType") === "localfile") {
+            let css = `<link rel="stylesheet" id="customCSS" href="vvc://${config.get("cssLocal") != null ? config.get("cssLocal") : ""}">`;
+            document.body.insertAdjacentHTML("afterbegin", css)
+        } else if (config.get("cssType") === "online") {
+            let css = `<style id="customCSS">@import url('${config.get("cssUrl") != null ? config.get("cssUrl") : ""}');</style>`;
+            document.body.insertAdjacentHTML("afterbegin", css)
+        }
     };
     initTitleText() {
         let titleText = document.getElementsByClassName("yYlig")[0]
-        titleText.innerText = config.get("customGameLogoText")
+        titleText.innerText = config.get("customGameLogoText") ? config.get("customGameLogoText") : setting.customGameLogoText.default
     };
     urlChanged(url) {
         switch (url) {
@@ -93,6 +108,31 @@ exports.clientTools = class {
                 break;
         }
     }
+    sendWebhook(node) {
+        // console.log(node);
+        if (config.get("enableCtW")) {
+            let text = node.innerText.replace(/[`]/g, "'")
+            try {
+                let url = config.get("webhookUrl")
+                const req = {
+                    content: "`" + text + "`",
+                    username: "Vanced Voxiom Client CtW Tool",
+                    avatar_url: "https://i.imgur.com/bdClDSq.png",
+                    allowed_mentions: {
+                        parse: []
+                    }
+                }
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(req),
+                })
+            } catch (error) { }
+        }
+    }
+
 }
 exports.settingTool = class {
     closeSetting() {
@@ -103,8 +143,8 @@ exports.settingTool = class {
         config.set("settingWindowOpen", !document.getElementById("vvcSetting").classList.contains("hide"))
     };
     setSetting(id, value) {
-        config.set(id, value);
-        log.info(id, value)
+        value != null ? config.set(id, value) : "";
+        // log.info(id, value)
         switch (id) {
             case "customBG":
                 document.getElementById("customBgCss").innerText = `.bNczYf{background-image:url("${value == "" ? setting.customBackGround.default : value = null ? setting.customBackGround.default : value}")}.hrxbol{content:url("${config.get("customLogo") == "" || config.get("customLogo") == null ? setting.customGameLogo.default : config.get("customLogo")} ")}`
@@ -128,23 +168,51 @@ exports.settingTool = class {
                 document.getElementById("crosshair").setAttribute("style", `width:${config.get("crosshairSizeX") != null ? config.get("crosshairSizeX") : setting.crosshairSizeX.default}px;height:${value != null ? value : setting.crosshairSizeY.default}px;`)
                 break;
             case "detectCrosshairSize":
-                document.getElementById("crosshair").
-                    break;
-            case "cssType":
+                let C = document.getElementById("crosshair")
+                let X = document.getElementById("crosshair").naturalWidth;
+                let Y = document.getElementById("crosshair").naturalHeight;
+                config.set("crosshairSizeX", X)
+                config.set("crosshairSizeY", Y)
+                C.setAttribute("style", `width:${X}px;height:${Y}px`);
+                document.getElementById("rangecrosshairSizeX").value = X
+                document.getElementById("rangecrosshairSizeY").value = Y
+                document.getElementById("numcrosshairSizeX").value = X
+                document.getElementById("numcrosshairSizeY").value = Y
                 break;
+            case "cssType":
+                document.getElementById("customCSS") ? document.getElementById("customCSS").remove() : "";
+                switch (value) {
+                    case "none":
+                        document.getElementById("customCSS") ? document.getElementById("customCSS").remove() : "";
+                        break;
+                    case "text":
+                        document.body.insertAdjacentHTML("afterbegin", `<style id="customCSS">${config.get("cssTextarea") != null ? config.get("cssTextarea") : ""}</style>`)
+                        break
+                    case "localfile":
+                        document.body.insertAdjacentHTML("afterbegin", `<link rel="stylesheet" id="customCSS" href="vvc://${config.get("cssLocal") != null ? config.get("cssLocal") : ""}">`)
+                        break;
+                    case "online":
+                        document.body.insertAdjacentHTML("afterbegin", `<style id="customCSS">@import url('${config.get("cssUrl") != null ? config.get("cssUrl") : ""}');</style>`)
+                        break;
+                }
             case "cssTextarea":
+                config.get("cssType") === "text" ? document.getElementById("customCSS").innerText = value : "";
                 break;
             case "cssLocal":
+                config.get("cssType") === "localfile" ? document.getElementById("customCSS").setAttribute("href", "vvc://" + value) : "";
                 break;
             case "cssUrl":
+                config.get("cssType") === "online" ? document.getElementById("customCSS").innerText = `@import url('${value}')` : ""
                 break;
             case "quickJoinRegion":
                 break;
             case "quickJoinMode":
                 break;
             case "disableSnow":
+                value ? document.getElementById("snowStyle").innerText = ".snowflakes{display: none}" : document.getElementById("snowStyle").innerText = ".snowflakes{display: unset}";
                 break;
             case "disableGemPopup":
+                value ? document.getElementById("freeGem").innerText = ".ksWDWD{display:none !important}" : document.getElementById("freeGem").innerText = ".ksWDWD{display: unset}";
                 break;
             case "enableCtW":
                 break;
@@ -154,7 +222,7 @@ exports.settingTool = class {
                 break;
         }
 
-    }
+    };
     sliderMove(id, value) {
         switch (id) {
             case "crosshairSizeX":
@@ -172,7 +240,7 @@ exports.settingTool = class {
                 }
                 break;
         }
-    }
+    };
     numInput(id, value) {
         switch (id) {
             case "crosshairSizeX":
@@ -190,5 +258,32 @@ exports.settingTool = class {
                 }
                 break;
         }
+    };
+    openFile(id) {
+        ipcRenderer.invoke("openFile").then((path) => {
+            log.info(path)
+            log.info(path[0])
+            path != null ? config.set(id, path[0]) : ""
+            this.setSetting(id, path[0])
+        })
+    };
+    help() {
+        shell.openExternal("https://namekujilsds.github.io/VVC")
+    }
+    exportGameSetting() {
+        let setting = localStorage.getItem("persist:root");
+        const blob = new Blob([setting], { type: 'text/plain' });
+        const downloadLink = document.createElement('a')
+        downloadLink.download = "Setting.txt";
+        downloadLink.href = window.URL.createObjectURL(blob);
+        downloadLink.click();
+    }
+    importGameSetting() {
+
+    }
+    VVCSetting() { }
+    VVCSetting() { }
+    settingCheck() {
+        log.info(val.id, config.get(val.id));
     }
 };

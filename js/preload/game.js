@@ -15,15 +15,22 @@ const tool = new vvcTool.settingTool();
 document.addEventListener('DOMContentLoaded', () => {
     //url変更を検知
     tools.urlChanged(location.href)
-    //
-    tools.setupClientSetting();
-    tools.initDoms()
+    if (location.origin === "https://voxiom.io") {
+        tools.setupClientSetting();
+        tools.initDoms()
+    }
     document.body.insertAdjacentHTML("beforeend", tools.vvcSettingStyleInject());
     window.tool = new vvcTool.settingTool()
-
     // 条件に一致するノードの中身を書き換える関数
     const observerCallback = function (mutationsList, observer) {
-        for (let mutation of mutationsList) { mutation.addedNodes.forEach(addedNode => { nodeCheck(addedNode) }); }
+        for (let mutation of mutationsList) {
+            mutation.addedNodes.forEach(addedNode => {
+                nodeCheck(addedNode);
+                if (addedNode.className === "sc-jWWnA ekvAMc") {
+                    tools.sendWebhook(addedNode)
+                }
+            });
+        }
     }
     const targetNode = document.getElementById("app");
     const observer = new MutationObserver(observerCallback);

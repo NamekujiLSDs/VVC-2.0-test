@@ -1,46 +1,21 @@
-<div id="login">
-    <a id="loginBtn" class="discord" href="http://voxiom.io/auth/google2" target="_self">Sign in with Discord</a>
-    <a id="loginBtn" class="google" href="http://voxiom.io/auth/google2" target="_self">Sign in with Google</a>
-    <a id="loginBtn" class="facebook" href="http://voxiom.io/auth/google2" target="_self">Sign in with Facebook</a>
+<div id=setBox>
+    <div class=catTitle>Account manager</div>
+    <div id=horizonalSpacer></div>
+    <div id=setItem class=gridBtn>
+        <input onclick='window.open("https://google.com")' type=button value=Google>
+        <input onclick='window.open("https://www.facebook.com")' type=button value=Facebook>
+        <input onclick='window.open("https://discord.com/channels/@me")' type=button value=Discord>
+        <input onclick='window.tool.help()' type=button value="Open Help">
+    </div>
 </div>
 
-<style>
-    #loginBtn {
-        text-align: center;
-        padding: 10px;
-        text-decoration: none;
-        color: white;
-        margin-bottom: 10px;
-        width: 200px;
-        display: flex;
-        -webkit-box-align: center;
-        align-items: center;
-        cursor: pointer;
-    }
-
-    .discord {
-        background-color: rgb(114, 137, 218);
-    }
-
-    .google {
-        background-color: rgb(234, 68, 53);
-    }
-
-    .facebook {
-        background-color: rgb(73, 103, 170);
-    }
-
-    .discord:hover {
-        background-color: rgb(141, 166, 255);
-    }
-
-    .google:hover {
-        background-color: rgb(255, 106, 92);
-    }
-
-    .facebook:hover {
-        background-color: rgb(101, 139, 226);
-    }
-</style>
-
-<img src="" alt="" srcset="">
+<div id="setBox">
+    <div class=catTitle>Setting Export / Import</div>
+    <div id=horizonalSpacer></div>
+    <div id=setItem class=gridBtn>
+        <input type="button" value="Export Game Setting" onclick="window.tool.exportGameSetting()">
+        <input type="button" value="Import Game Setting" onclick="window.tool.importGameSetting()">
+        <input type="button" value="Export VVC's Setting" onclick="window.tool.VVCSetting()">
+        <input type="button" value="Import VVC's Setting" onclick="window.tool.VVCSetting()">
+    </div>
+</div>
