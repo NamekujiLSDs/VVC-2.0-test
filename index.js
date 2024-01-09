@@ -18,10 +18,10 @@ const clientID = "1186209799935889469";
 const RPC = new DiscordRPC.Client({ transport: "ipc" });
 
 
+const appVer = app.getVersion()
 //バージョンの取得
 ipcMain.handle("appVer", () => {
-    const version = app.getVersion();
-    return version;
+    return appVer
 });
 
 ipcMain.handle("cacheClear", () => {
@@ -123,16 +123,18 @@ function createSplashWindow() {
 
 function createMainWindow() {
     mainWindow = new BrowserWindow({
-        fullscreen: true,
-        frame: false,
+        fullscreen: config.get("Fullscreen"),
         show: false,
         webPreferences: {
             preload: path.join(__dirname, "js/preload/game.js"),
             enableHardwareAcceleration: true,
             enableRemoteModule: true,
-            contextIsolation: true
+            //　↓絶対にお前だけは許さない
+            // contextIsolation: true
+            //　↑絶対にお前だけは許さない
         },
     });
+    mainWindow.title = "Vanced Voxiom Client v" + appVer
     Menu.setApplicationMenu(null);
 
     //ショートカットの登録
@@ -140,7 +142,10 @@ function createMainWindow() {
         mainWindow.webContents.send("ESC")
     })
     localShortcut.register(mainWindow, "F1", () => {
-        mainWindow.loadURL("https://voxiom.io")
+        mainWindow.send("F1")
+    })
+    localShortcut.register(mainWindow, "F4", () => {
+        mainWindow.send("F4")
     })
     localShortcut.register(mainWindow, "F5", () => {
         mainWindow.reload()
@@ -161,8 +166,8 @@ function createMainWindow() {
     })
 
     //ページを閉じられるようにする。
-    mainWindow.webContents.on('will-prevent-unload', (event) => {
-        event.preventDefault()
+    mainWindow.webContents.on('will-prevent-unload', (e) => {
+        e.preventDefault()
     })
 
     mainWindow.webContents.loadURL("https://voxiom.io");
@@ -170,6 +175,15 @@ function createMainWindow() {
     mainWindow.once("ready-to-show", () => {
         splashWindow.destroy();
         mainWindow.show()
+    })
+
+    mainWindow.on("page-title-updated", (e) => {
+        e.preventDefault()
+    })
+
+
+    mainWindow.webContents.on("did-navigate-in-page", (event, url) => {
+        mainWindow.send("url", url)
     })
 }
 

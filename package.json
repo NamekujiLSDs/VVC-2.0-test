@@ -4,7 +4,7 @@
     "description": "Re-coding Vanced Voxiom Client with electron@28",
     "main": "index.js",
     "devDependencies": {
-        "electron": "^9.4.4",
+        "electron": "^10.4.7",
         "electron-builder": "^24.9.1"
     },
     "dependencies": {

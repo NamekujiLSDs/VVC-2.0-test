@@ -23,20 +23,30 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+#windowCloser {
+    background: #0005;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    position: fixed;
+    backdrop-filter: blur(5px);
+}
+
 #vvcSetting {
     background-color: #222;
     width: 620px;
     height: 470px;
     color: white;
-    /* margin-inline: 10px; */
     padding-top: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 9999;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     flex-direction: column;
-    box-shadow: 0 0 5px black;
+    box-shadow: 0 0 30px black;
 }
 
 #settingTitleBar {
@@ -47,6 +57,7 @@
     padding: 0 10px;
     background: gray;
     height: 25px;
+    line-height: 25px;
 }
 
 #setBody {
@@ -110,6 +121,18 @@
     background: white;
 }
 
-:focus {
+#vvcSetting *:focus {
     outline: 1px solid cyan
+}
+
+.hide {
+    display: none !important;
+}
+
+#crosshair {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    image-rendering: pixelated;
+    transform: translate(-50%, -50%)
 }

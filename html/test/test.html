@@ -1,81 +1,46 @@
-<div id="vvcSetting">
-    <div id="settingTitleBar">
-        Vanced Voxiom Client Settings
-        <span class="material-symbols-outlined closeBtn">
-            close
-        </span>
-    </div>
-
-    <div id="setBody">
-        <div id="setBox">
-            <div class="catTitle">General</div>
-            <div id="horizonalSpacer"></div>
-            <div id="setItem">
-                <div id="settingName">
-                    Custom game logo image
-                </div>
-                <input type="text" onchange="">
-            </div>
-            <div id="setItem">
-                <div id="settingName">
-                    Custom game logo image
-                </div>
-                <input type="text" onchange="">
-            </div>
-        </div>
-        <div id="setBox">
-            <div class="catTitle">General</div>
-            <div id="horizonalSpacer"></div>
-            <div id="setItem">
-                <div id="settingName">
-                    Custom game logo image
-                </div>
-                <input type="text" onchange="">
-            </div>
-            <div id="setItem">
-                <div id="settingName">
-                    Custom game logo image
-                </div>
-                <input type="text" onchange="">
-            </div>
-            <div id="setItem">
-                <div id="settingName">
-                    Custom game logo image
-                </div>
-                <input type="text" onchange="">
-            </div>
-            <div id="setItem">
-                <div id="settingName">
-                    Custom game logo image
-                </div>
-                <input type="button" value="" onclick="">
-            </div>
-        </div>
-        <div id="setBox">
-            <div class="catTitle">
-                Account manager
-            </div>
-            <div id="horizonalSpacer"></div>
-            <div id="setItem" class="accountManage">
-                <input type="button" onclick="window.open('https://google.com')" value="Google">
-                <input type="button" onclick="window.open('https://www.facebook.com')" value="Facebook">
-                <input type="button" onclick="window.open('https://discord.com/channels/@me')" value="Discord">
-                <input type="button" onclick="window.location.href ='https://voxiom.io/auth/logout'"
-                    value=" Logout Voxiom ">
-            </div>
-        </div>
-
-        <div id="setBox">
-            <div class="catTitle">
-                Other setting
-            </div>
-            <div id="horizonalSpacer"></div>
-            <input type="button" value="Cache clear" onclick="window.tool.clearCache()">
-            <input type="button" value="Reset all" onclick="window.tool.resetAll()">
-            <input type="button" value="Restart client" onclick="window.tool.restart()">
-            <input type="button" value="Help" onclick="window.tool.help()">
-        </div>
-    </div>
-
+<div id="login">
+    <a id="loginBtn" class="discord" href="http://voxiom.io/auth/google2" target="_self">Sign in with Discord</a>
+    <a id="loginBtn" class="google" href="http://voxiom.io/auth/google2" target="_self">Sign in with Google</a>
+    <a id="loginBtn" class="facebook" href="http://voxiom.io/auth/google2" target="_self">Sign in with Facebook</a>
 </div>
-<link rel=" stylesheet " href=" test.css ">
+
+<style>
+    #loginBtn {
+        text-align: center;
+        padding: 10px;
+        text-decoration: none;
+        color: white;
+        margin-bottom: 10px;
+        width: 200px;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .discord {
+        background-color: rgb(114, 137, 218);
+    }
+
+    .google {
+        background-color: rgb(234, 68, 53);
+    }
+
+    .facebook {
+        background-color: rgb(73, 103, 170);
+    }
+
+    .discord:hover {
+        background-color: rgb(141, 166, 255);
+    }
+
+    .google:hover {
+        background-color: rgb(255, 106, 92);
+    }
+
+    .facebook:hover {
+        background-color: rgb(101, 139, 226);
+    }
+</style>
+
+<img src="" alt="" srcset="">
