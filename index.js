@@ -223,8 +223,8 @@ function createMainWindow() {
                 callback({ redirectURL: "vvc://" + path.join(app.getPath('documents'), '/VVC-Swapper', 'COUNTDOWN.mp3') })
             } else if (details.url === "https://voxiom.io/package/16d0167f832e1b29b0e8.mp3" && files.includes("DAMAGE.mp3")) {
                 callback({ redirectURL: "vvc://" + path.join(app.getPath('documents'), '/VVC-Swapper', 'DAMAGE.mp3') })
-            } else if (details.url === "https://voxiom.io/package/d381117b446c6f5779e4.mp3" && files.includes("SAND.mp3")) {
-                callback({ redirectURL: "vvc://" + path.join(app.getPath('documents'), '/VVC-Swapper', 'SAND.mp3') })
+            } else if (details.url === "https://voxiom.io/package/d381117b446c6f5779e4.mp3" && files.includes("GRASS.mp3")) {
+                callback({ redirectURL: "vvc://" + path.join(app.getPath('documents'), '/VVC-Swapper', 'GRASS.mp3') })
             } else if (details.url === "https://voxiom.io/package/c4798765bd538e771540.mp3" && files.includes("LEAF.mp3")) {
                 callback({ redirectURL: "vvc://" + path.join(app.getPath('documents'), '/VVC-Swapper', 'LEAF.mp3') })
             } else if (details.url === "https://voxiom.io/package/47da41fafd1793328f3f.mp3" && files.includes("WOOD.mp3")) {
@@ -251,6 +251,10 @@ function createMainWindow() {
                 callback({ redirectURL: "vvc://" + path.join(app.getPath('documents'), '/VVC-Swapper', 'TNT-FIRE.mp3') })
             } else if (details.url === "https://voxiom.io/package/6b7698eca47a7e7231fb.mp3" && files.includes("TNT-BOOM.mp3")) {
                 callback({ redirectURL: "vvc://" + path.join(app.getPath('documents'), '/VVC-Swapper', 'TNT-BOOM.mp3') })
+            } else if (details.url === "https://voxiom.io/package/f06b7e9c578d865af0ff.mp3" && files.includes("DROP-COLLECT.mp3")) {
+                callback({ redirectURL: "vvc://" + path.join(app.getPath('documents'), '/VVC-Swapper', 'DROP-COLLECT.mp3') })
+            } else if (details.url === "https://voxiom.io/package/0513564d081549305880.mp3" && files.includes("SAND.mp3")) {
+                callback({ redirectURL: "vvc://" + path.join(app.getPath('documents'), '/VVC-Swapper', 'SAND.mp3') })
             } else if (details.url === "https://voxiom.io/package/cb1d14c1ff0efb6a282b.png" && files.includes("SOLDIER.png")) {
                 callback({ redirectURL: "vvc://" + path.join(app.getPath('documents'), '/VVC-Swapper', 'SOLDIER.png') })
             } else if (details.url === "https://voxiom.io/package/aef55bdd0c3c3c3734f8.png" && files.includes("RED.png")) {
@@ -259,7 +263,7 @@ function createMainWindow() {
                 callback({ redirectURL: "vvc://" + path.join(app.getPath('documents'), '/VVC-Swapper', 'BLUE.png') })
             } else if (details.url === "https://voxiom.io/package/9223b6316bedee5652fb.png" && files.includes("INDICATOR.png")) {
                 callback({ redirectURL: "vvc://" + path.join(app.getPath('documents'), '/VVC-Swapper', 'INDICATOR.png') })
-            } else if (details.url === "https://voxiom.io/package/ea55824826de52b7ccc3.png" && files.includes("LOGO-SPRAY.png")) {
+            } else if (details.url === "https://voxiom.io/package/edbaf3d94f4c091bbfc0.png" && files.includes("LOGO-SPRAY.png")) {
                 callback({ redirectURL: "vvc://" + path.join(app.getPath('documents'), '/VVC-Swapper', 'LOGO-SPRAY.png') })
             } else {
                 callback({})

@@ -15,7 +15,8 @@
     "HIT-HEAD.mp3": "https://voxiom.io/package/7188d9a8c8a09ab9936e.mp3",
     "COUNTDOWN.mp3": "https://voxiom.io/package/ad6949ab40e7252565dd.mp3",
     "DAMAGE.mp3": "https://voxiom.io/package/16d0167f832e1b29b0e8.mp3",
-    "SAND.mp3": "https://voxiom.io/package/d381117b446c6f5779e4.mp3",
+    "GRASS.mp3": "https://voxiom.io/package/d381117b446c6f5779e4.mp3",
+    "SAND": "https://voxiom.io/package/0513564d081549305880.mp3",
     "LEAF.mp3": "https://voxiom.io/package/c4798765bd538e771540.mp3",
     "WOOD.mp3": "https://voxiom.io/package/47da41fafd1793328f3f.mp3",
     "DIRT.mp3": "https://voxiom.io/package/77e4aeb8db8c136f7da7.mp3",
@@ -29,10 +30,10 @@
     "SPRAY.mp3": "https://voxiom.io/package/5b11619669c073298081.mp3",
     "TNT-FIRE.mp3": "https://voxiom.io/package/67fd45879fa008bd15f9.mp3",
     "TNT-BOOM.mp3": "https://voxiom.io/package/6b7698eca47a7e7231fb.mp3",
-
+    "DROP-COLLECT": "https://voxiom.io/package/f06b7e9c578d865af0ff.mp3",
     "SOLDIER.png": "https://voxiom.io/package/cb1d14c1ff0efb6a282b.png",
     "RED.png": "https://voxiom.io/package/aef55bdd0c3c3c3734f8.png",
     "BLUE.png": "https://voxiom.io/package/ecca1227c2e0406be225.png",
     "INDICATOR.png": "https://voxiom.io/package/9223b6316bedee5652fb.png",
-    "LOGO-SPRAY.png": "https://voxiom.io/package/ea55824826de52b7ccc3.png"
+    "LOGO-SPRAY.png": "https://voxiom.io/package/edbaf3d94f4c091bbfc0.png"
 }

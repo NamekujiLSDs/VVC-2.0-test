@@ -1,21 +1,7 @@
-<div id=setBox>
-    <div class=catTitle>Account manager</div>
-    <div id=horizonalSpacer></div>
-    <div id=setItem class=gridBtn>
-        <input onclick='window.open("https://google.com")' type=button value=Google>
-        <input onclick='window.open("https://www.facebook.com")' type=button value=Facebook>
-        <input onclick='window.open("https://discord.com/channels/@me")' type=button value=Discord>
-        <input onclick='window.tool.help()' type=button value="Open Help">
-    </div>
+<div id="escJoin">
+    <input type="text" id="joinInput">
+    <input type="button" value="JOIN" onclick="window.tool.joinGame('joinInput')">
 </div>
-
-<div id="setBox">
-    <div class=catTitle>Setting Export / Import</div>
-    <div id=horizonalSpacer></div>
-    <div id=setItem class=gridBtn>
-        <input type="button" value="Export Game Setting" onclick="window.tool.exportGameSetting()">
-        <input type="button" value="Import Game Setting" onclick="window.tool.importGameSetting()">
-        <input type="button" value="Export VVC's Setting" onclick="window.tool.VVCSetting()">
-        <input type="button" value="Import VVC's Setting" onclick="window.tool.VVCSetting()">
-    </div>
+<div id="escCopy">
+    <input type="button" value="Copy Link" onclick="navigator.clipboard.writeText(location.href)">
 </div>

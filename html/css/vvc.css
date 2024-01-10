@@ -23,7 +23,8 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-#windowCloser {
+#windowCloser,
+#matchCloser {
     background: #0005;
     top: 0;
     left: 0;
@@ -47,6 +48,7 @@
     transform: translate(-50%, -50%);
     flex-direction: column;
     box-shadow: 0 0 30px black;
+    font-family: sans-serif;
 }
 
 #settingTitleBar {
@@ -135,4 +137,43 @@
     left: 50%;
     image-rendering: pixelated;
     transform: translate(-50%, -50%)
+}
+
+#matchTable {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#matchList tr {
+    margin-bottom: 4px;
+}
+
+#matchList td {
+    padding: 5px;
+    border: #fff2 .5px solid;
+}
+
+#matchList {
+    background-color: #222;
+    width: 620px;
+    height: 470px;
+    color: white;
+    padding-top: 0;
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    box-shadow: 0 0 30px black;
+    font-family: sans-serif;
+}
+
+#escJoin,
+#escCopy {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
+    justify-content: space-evenly
 }

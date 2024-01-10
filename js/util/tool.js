@@ -69,14 +69,14 @@ exports.clientTools = class {
     initDoms() {
         let dom1 = `<style id="customBgCss">.bNczYf{background-image:url("${config.get("customBG") == null || config.get("customBG") == "" ? setting.customBackGround.default : config.get("customBG")}")}.hrxbol{content:url("${config.get("customLogo") == "" || config.get("customLogo") == null ? setting.customGameLogo.default : config.get("customLogo")}")}</style>`;
         document.body.insertAdjacentHTML("afterbegin", dom1);
-
         let dom2 = `<style id="snowStyle"> .snowflakes {display: ${config.get("disableSnow") !== true ? "unset" : "none"}}</style>`
         document.body.insertAdjacentHTML("afterbegin", dom2);
         let dom3 = `<style id="freeGem">.ksWDWD{display:${config.get("disableGemPopup") !== true ? "unset" : "none !important"}}</style>`
         document.body.insertAdjacentHTML("afterbegin", dom3);
         let crosshair = `<img id="crosshair" style="width:${config.get("crosshairSizeX") != null ? config.get("crosshairSizeX") : setting.crosshairSizeX.default}px;height:${config.get("crosshairSizeY") != null ? config.get("crosshairSizeY") : setting.crosshairSizeY.default}px;" src="${config.get("customCrosshairImage") != null ? config.get("customCrosshairImage") : setting.customCrosshairImage.default}" class="${config.get("customCrosshairCheckbox") ? "" : "hide"}" ></img>`
         document.getElementById("app").insertAdjacentHTML("afterbegin", crosshair);
-
+        let matchList = `<div id=matchCloser class=hide onclick=window.tool.closeMatchList()></div><div id=matchList class=hide><div id=settingTitleBar>Match Browser <span class="closeBtn material-symbols-outlined"onclick=window.tool.closeMatchList()>close</span></div><div id=setBody><div id=matches><table id=matchTable><tbody id=matchInfo></tbody></table></div></div></div>`
+        document.body.insertAdjacentHTML("afterbegin", matchList)
         if (config.get("cssType") === "none") {
             console.log("No custom css gen")
         } else if (config.get("cssType") === "text") {
@@ -143,8 +143,9 @@ exports.settingTool = class {
         config.set("settingWindowOpen", !document.getElementById("vvcSetting").classList.contains("hide"))
     };
     setSetting(id, value) {
+
         value != null ? config.set(id, value) : "";
-        // log.info(id, value)
+        log.info(id, value)
         switch (id) {
             case "customBG":
                 document.getElementById("customBgCss").innerText = `.bNczYf{background-image:url("${value == "" ? setting.customBackGround.default : value = null ? setting.customBackGround.default : value}")}.hrxbol{content:url("${config.get("customLogo") == "" || config.get("customLogo") == null ? setting.customGameLogo.default : config.get("customLogo")} ")}`
@@ -281,9 +282,61 @@ exports.settingTool = class {
     importGameSetting() {
 
     }
-    VVCSetting() { }
-    VVCSetting() { }
     settingCheck() {
         log.info(val.id, config.get(val.id));
+    }
+    quickJoin() {
+        let url = `https://voxiom.io/find?region=${config.get("quickJoinRegion") != null ? config.get("quickJoinRegion") : setting.quickJoinRegion.default}&game_mode=${config.get("quickJoinMode") != null ? config.get("quickJoinMode") : setting.quickJoinMode.default}`
+        fetch(url).then(responce => {
+            return responce.json()
+        }).then(data => {
+            log.info(data.tag)
+            location.href = `https://voxiom.io/#${data.tag}`
+            location.reload()
+        }).catch(e => { log.error(e) })
+    }
+    openMatchList() {
+        const displayChange = () => {
+            document.getElementById("matchList").classList.toggle("hide")
+            document.getElementById("matchCloser").classList.toggle("hide")
+        }
+        const genUrls = () => {
+            const reg = [0, 1, 2, 3];
+            const mode = ["ctg", "br", "ffa", "svv"];
+            const urls = [];
+            for (let num of reg) {
+                for (let m of mode) {
+                    const url = `https://voxiom.io/find?region=${num}&game_mode=${m}`;
+                    urls.push([num, m, url]);
+                }
+            }
+            return urls;
+        };
+        displayChange()
+        let url = genUrls()
+        if (!document.getElementById("matchList").classList.contains("hide")) {
+            document.getElementById('matchInfo').innerHTML = ""
+            for (let array of url) {
+                fetch(array[2]).then(result => {
+                    return result.json()
+                }).then(data => {
+                    let temDom = `<tr>
+                    <td>${array[0] === 0 ? "US-W" : array[0] === 1 ? "US-E" : array[0] === 2 ? "EU" : array[0] === 3 ? "Asia" : array[0]}</td >
+                    <td>${array[1] === "svv" ? "Survival" : array[1] === "ffa" ? "FFA" : array[1] === "br" ? "BR" : array[1] === "ctg" ? "CTG" : array[1]}</td>
+                    <td>https://voxiom.io/#${data.tag}</td>
+                    <td onclick="navigator.clipboard.writeText('https://voxiom.io/#${data.tag}')">Copy</td>
+                    <td onclick="window.location.replace('https://voxiom.io/#${data.tag}');location.reload() ">Join</td></tr>`
+                    document.getElementById('matchInfo').insertAdjacentHTML("afterbegin", temDom)
+                })
+            }
+        }
+    }
+    closeMatchList() {
+        document.getElementById("matchList").classList.contains("hide") ? "" : document.getElementById("matchList").classList.add("hide")
+        document.getElementById("matchCloser").classList.contains("hide") ? "" : document.getElementById("matchCloser").classList.add("hide")
+    }
+    joinGame() {
+        document.getElementById("joinInput").value != null ? location.href = document.getElementById("joinInput").value : "";
+        document.getElementById("joinInput").value != null ? location.reload() : ""
     }
 };
